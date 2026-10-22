@@ -1,4 +1,4 @@
-# GBIFRESH — Toko Buah Online Jogja
+# GBIFRESH — Toko Buah Online
 
 Website mobile-first untuk jual buah lokal & impor online area Yogyakarta dengan
 checkout langsung ke **WhatsApp admin resmi**. Fullstack: frontend, backend API
