@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GBIFRESH - Buah Segar</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,sans-serif}
+body{background:#f1f5f9;padding-bottom:90px}
+.header{background:#16a34a;color:#fff;padding:18px;text-align:center;position:sticky;top:0;z-index:99}
+.header h1{font-size:22px}
+.header p{font-size:13px;opacity:.9;margin-top:3px}
+.container{max-width:480px;margin:0 auto;padding:12px}
+.card{background:#fff;border-radius:18px;padding:12px;margin-bottom:12px;display:flex;gap:12px;align-items:center;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.card img{width:78px;height:78px;border-radius:14px;object-fit:cover}
+.info{flex:1}
+.info h3{font-size:16px;margin-bottom:2px}
+.price{color:#16a34a;font-weight:800}
+.desc{font-size:12px;color:#64748b;margin-top:2px}
+.btn{border:none;background:#16a34a;color:#fff;padding:9px 16px;border-radius:20px;font-weight:700;cursor:pointer}
+.cart{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e2e8f0;padding:12px}
+.cart .in{max-width:480px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
+.btn-wa{background:#25D366;color:#fff;border:none;padding:12px 22px;border-radius:26px;font-weight:900;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="header">
+<h1>🍎 GBIFRESH</h1>
+<p>Pesan Buah Segar - Langsung WA</p>
+</div>
+<div class="container" id="list"></div>
+<div class="cart">
+<div class="in">
+<div><span id="c">0</span> item | <b id="t">Rp 0</b></div>
+<button class="btn-wa" onclick="order()">Pesan WA 📲</button>
+</div>
+</div>
+<script>
+const WA_NUMBER = "085659524830"; // <-- GANTI NOMOR WA LU DISINI YAD!
+
+const products = [
+{name:"Apel Fuji",price:25000,desc:"1kg - Manis Segar",img:"https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=300"},
+{name:"Jeruk Medan",price:20000,desc:"1kg - Juicy Manis",img:"https://images.unsplash.com/photo-1580052614034-c55d20bfee3b?w=300"},
+{name:"Pisang Cavendish",price:18000,desc:"1 Sisir",img:"https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=300"},
+{name:"Anggur Merah",price:45000,desc:"500gr Import",img:"https://images.unsplash.com/photo-1596363505729-4190a9506133?w=300"},
+{name:"Mangga Harum Manis",price:22000,desc:"1kg",img:"https://images.unsplash.com/photo-1553279768-865429fa0078?w=300"},
+{name:"Semangka",price:15000,desc:"1 Buah ~2kg",img:"https://images.unsplash.com/photo-1589984662646-e7b2a7433376?w=300"},
+];
+let cart=[];
+function render(){
+document.getElementById('list').innerHTML=products.map((p,i)=>`
+<div class="card">
+<img src="${p.img}">
+<div class="info">
+<h3>${p.name}</h3>
+<div class="price">Rp ${p.price.toLocaleString('id-ID')}</div>
+<div class="desc">${p.desc}</div>
+</div>
+<button class="btn" onclick="add(${i})">+ Tambah</button>
+</div>
+`).join('');
+}
+function add(i){cart.push(products[i]);upd()}
+function upd(){
+document.getElementById('c').textContent=cart.length;
+let tot=cart.reduce((a,b)=>a+b.price,0);
+document.getElementById('t').textContent="Rp "+tot.toLocaleString('id-ID');
+}
+function order(){
+if(cart.length==0){alert("Keranjang kosong! Pilih buah dulu");return}
+let tot=cart.reduce((a,b)=>a+b.price,0);
+let list=cart.map(p=>`- ${p.name} Rp ${p.price.toLocaleString('id-ID')}`).join('%0A');
+let text=`Halo GBIFRESH!%0A%0ASaya mau pesan:%0A${list}%0A%0ATotal: Rp ${tot.toLocaleString('id-ID')}%0A%0AAlamat: `;
+window.open(`https://wa.me/${WA_NUMBER}?text=${text}`,'_blank');
+}
+render();
+</script>
+</body>
+</html>
